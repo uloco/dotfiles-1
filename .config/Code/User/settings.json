@@ -1,0 +1,30 @@
+{
+    "keyboard.dispatch": "keyCode",
+    "editor.lineNumbers": "relative",
+    "vim.hlsearch": true,
+    "gitlens.blame.line.enabled": false,
+    "editor.tabSize": 2,
+    "workbench.colorTheme": "Bluloco Dark",
+    "window.zoomLevel": 0,
+    "editor.minimap.enabled": false,
+    "terminal.integrated.shell.linux": "/usr/bin/fish",
+    "gitlens.advanced.messages": {
+        "suppressCommitHasNoPreviousCommitWarning": false,
+        "suppressCommitNotFoundWarning": false,
+        "suppressFileNotUnderSourceControlWarning": false,
+        "suppressGitVersionWarning": false,
+        "suppressLineUncommittedWarning": false,
+        "suppressNoRepositoryWarning": false,
+        "suppressResultsExplorerNotice": true,
+        "suppressUpdateNotice": false,
+        "suppressWelcomeNotice": true
+    },
+    "javascript.validate.enable": true,
+    "flow.runOnEdit": true,
+    "workbench.editor.enablePreview": false,
+    "vim.easymotion": true,
+    "vim.handleKeys": {
+        "<C-d>": true
+    },
+    "gitlenxe"
+}

@@ -1,0 +1,16 @@
+[gitflow "branch"]
+	master = master
+	develop = develop
+[gitflow "prefix"]
+	feature = feature/
+	bugfix = bugfix/
+	release = release/
+	hotfix = hotfix/
+	support = support/
+	versiontag = 
+[gitflow "path"]
+	hooks = /home/dimi/Code/ebot7/ebot7/.git/hooks
+[core]
+	editor = vim
+[user]
+	email = dimitridumonet@gmail.com
