@@ -34,6 +34,9 @@ Plug 'cloudhead/neovim-fuzzy'
 Plug 'Yggdroot/indentLine'
 Plug 'vim-scripts/Tabmerge'
 Plug 'tpope/vim-fugitive'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
 call plug#end()
 
 " autocomplete
@@ -65,6 +68,8 @@ let g:ale_fix_on_save = 1
 syntax on
 autocmd FileType vue syntax sync fromstart
 colorscheme onedark
+let g:airline_theme='deus'
+let g:airline_powerline_fonts=1
 " number seems to slow down vim
 " set number relativenumber
 set rnu
@@ -93,9 +98,13 @@ nnoremap <Leader>r :Tabmerge right<CR>
 set ignorecase
 set smartcase
 
+nnoremap <Leader>m :tabm 
+
 " ternjs
 nnoremap :rn :TernRename<CR>
 nnoremap :gd :TernDef<CR>
+autocmd FileType riot call tern#Enable()
+autocmd FileType riot setlocal completeopt-=preview
 
 " nerdtred
 let g:NERDTreeWinSize=40
@@ -110,8 +119,9 @@ set encoding=utf8
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 let g:DevIconsEnableFoldersOpenClose = 1
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {} " needed
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vue'] = 'V'
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vue'] = 'v'
 let g:WebDevIconsNerdTreeAfterGlyphPadding = '  '
+let NERDTreeQuitOnOpen=1
 
 " gitgutter
 let g:gitgutter_map_key = 0
@@ -121,15 +131,18 @@ set updatetime=100
 set lazyredraw
 
 " terminal
-" Quickly create a new terminal in a vertical split
+" Create a new terminal in a vertical split
 tnoremap <Leader>l <C-\><C-n>:vsp<CR><C-w><C-w>:term<CR>
 noremap <Leader>l :vsp<CR><C-w><C-w>:term<CR>
 inoremap <Leader>l <Esc>:vsp<CR><C-w><C-w>:term<CR>
 
-" Quickly create a new terminal in a horizontal split
+" Create a new terminal in a horizontal split
 tnoremap <Leader>j <C-\><C-n>:sp<CR><C-w><C-w>:term<CR>
 noremap <Leader>j :sp<CR><C-w><C-w>:term<CR>
 inoremap <Leader>j <Esc>:sp<CR><C-w><C-w>:term<CR>
+
+" Create a new terminal in a new tab
+noremap <Leader>c :tabnew<CR>:term<CR>
 
 " Switches back to vim mode in terminal, can then close with :q
 tnoremap <Esc> <C-\><C-n>
@@ -147,3 +160,50 @@ set list listchars=tab:>\ ,trail:-,eol:↵
 " syntaxing
 let g:tigris#on_the_fly_enabled = 1
 let g:tigris#delay = 500
+
+
+" Rename tabs to show tab number.
+" (Based on http://stackoverflow.com/questions/5927952/whats-implementation-of-vims-default-tabline-function)
+if exists("+showtabline")
+    function! MyTabLine()
+        let s = ''
+        let wn = ''
+        let t = tabpagenr()
+        let i = 1
+        while i <= tabpagenr('$')
+            let buflist = tabpagebuflist(i)
+            let winnr = tabpagewinnr(i)
+            let s .= '%' . i . 'T'
+            let s .= (i == t ? '%1*' : '%2*')
+            let s .= ' '
+            let wn = tabpagewinnr(i,'$')
+
+            let s .= '%#TabNum#'
+            let s .= i
+            " let s .= '%*'
+            let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
+            let bufnr = buflist[winnr - 1]
+            let file = bufname(bufnr)
+            let buftype = getbufvar(bufnr, 'buftype')
+            if buftype == 'nofile'
+                if file =~ '\/.'
+                    let file = substitute(file, '.*\/\ze.', '', '')
+                endif
+            else
+                let file = fnamemodify(file, ':p:t')
+            endif
+            if file == ''
+                let file = '[No Name]'
+            endif
+            let s .= ' ' . file . ' '
+            let i = i + 1
+        endwhile
+        let s .= '%T%#TabLineFill#%='
+        let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
+        return s
+    endfunction
+    set stal=2
+    set tabline=%!MyTabLine()
+    set showtabline=1
+    highlight link TabNum Special
+  endif
