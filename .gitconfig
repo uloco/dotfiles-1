@@ -11,6 +11,6 @@
 [gitflow "path"]
 	hooks = /home/dimi/Code/ebot7/ebot7/.git/hooks
 [core]
-	editor = vim
+	editor = nvim
 [user]
 	email = dimitridumonet@gmail.com
