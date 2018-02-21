@@ -14,13 +14,12 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
--- Load Debian menu entries
-require("debian.menu")
-
 require("awesome-wm-widgets.battery-widget.battery")
 require("awesome-wm-widgets.volume-widget.volume")
-require("awesome-wm-widgets.brightness-widget.brightness")
 require("spotify")
+
+-- capslock to escape
+awful.spawn("setxkbmap -option caps:escape", false)
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -54,7 +53,7 @@ end
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "x-terminal-emulator"
+terminal = "xfce4-terminal"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -67,9 +66,9 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.tile.left,
+    awful.layout.suit.tile,
+    --awful.layout.suit.tile.left,
     awful.layout.suit.floating,
-    --awful.layout.suit.tile,
     --awful.layout.suit.tile.bottom,
     --awful.layout.suit.tile.top,
     --awful.layout.suit.fair,
@@ -112,7 +111,7 @@ myawesomemenu = {
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "Debian", debian.menu.Debian_menu.Debian },
+                                    -- { "Debian", debian.menu.Debian_menu.Debian },
                                     { "open terminal", terminal }
                                   }
                         })
@@ -235,7 +234,7 @@ awful.screen.connect_for_each_screen(function(s)
 
 
     sprtr = wibox.widget.textbox()
-    sprtr:set_text(" ")
+    sprtr:set_text("  ")
     
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s })
@@ -259,7 +258,6 @@ awful.screen.connect_for_each_screen(function(s)
             battery_widget,
             layout = wibox.layout.fixed.horizontal,
             kbdcfg.widget,
-            --brightness_widget,
             wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,
@@ -383,14 +381,18 @@ globalkeys = gears.table.join(
     awful.key({ }, "XF86AudioPlay", function () awful.spawn("sp play", false) end),
     awful.key({ }, "XF86AudioNext", function () awful.spawn("sp next", false) end),
     awful.key({ }, "XF86AudioPrev", function () awful.spawn("sp prev", false) end),
-    
+
+    -- Brightness
+    awful.key({ }, "XF86MonBrightnessUp", function () awful.spawn("light -A 15") end),
+    awful.key({ }, "XF86MonBrightnessDown", function () awful.spawn("light -U 15") end),
+
     -- Volume
     awful.key({ }, "XF86AudioRaiseVolume", function () awful.spawn("amixer -D pulse sset Master 5%+", false) end),
     awful.key({ }, "XF86AudioLowerVolume", function () awful.spawn("amixer -D pulse sset Master 5%-", false) end),
     awful.key({ }, "XF86AudioMute", function () awful.spawn("amixer -D pulse sset Master toggle", false) end),
 
     -- Lock screen
-    awful.key({ modkey }, "b", function () awful.spawn("gnome-screensaver-command --lock", false) end),
+    awful.key({ modkey }, "b", function () awful.spawn("slock", false) end),
 
     -- Suspend
     awful.key({ modkey }, "d", function () awful.spawn("systemctl suspend", false) end),
@@ -399,7 +401,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Shift" }, "d", function () awful.spawn("shutdown -h now", false) end),
 
     -- Open file explorer
-    awful.key({ modkey }, "e", function () awful.spawn("nautilus", false) end)
+    awful.key({ modkey }, "e", function () awful.spawn("thunar", false) end)
 
 
 
@@ -520,7 +522,8 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons,
                      screen = awful.screen.preferred,
-                     placement = awful.placement.no_overlap+awful.placement.no_offscreen
+                     placement = awful.placement.no_overlap+awful.placement.no_offscreen,
+                     size_hints_honor = false
      }
   },
 

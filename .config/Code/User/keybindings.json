@@ -3,5 +3,9 @@
   {
     "key": "ctrl+shift+b",
     "command": "workbench.action.toggleSidebarVisibility"
+  },
+  {
+    "key": "alt+f12",
+    "command": "workbench.action.toggleMaximizedPanel"
   }
 ]

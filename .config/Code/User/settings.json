@@ -20,11 +20,16 @@
         "suppressWelcomeNotice": true
     },
     "javascript.validate.enable": true,
-    "flow.runOnEdit": true,
     "workbench.editor.enablePreview": false,
     "vim.easymotion": true,
     "vim.handleKeys": {
         "<C-d>": true
     },
-    "gitlenxe"
+    "gitlens.currentLine.enabled": false,
+    "gitlens.hovers.currentLine.enabled": false,
+    "gitlens.recentChanges.highlight.locations": [
+        "gutter",
+        "overview",
+        "line"
+    ]
 }

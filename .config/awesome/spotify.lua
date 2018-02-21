@@ -28,9 +28,9 @@ spotify_widget = wibox.widget {
 local update_widget_icon = function(widget, stdout, _, _, _)
     stdout = string.gsub(stdout, "\n", "")
     if (stdout == 'RUNNING') then
-        widget:set_image(PATH_TO_ICONS .. "/actions/24/player_play.png")
-    elseif (stdout == "CORKED") then
         widget:set_image(PATH_TO_ICONS .. "/actions/24/player_pause.png")
+    elseif (stdout == "CORKED") then
+        widget:set_image(PATH_TO_ICONS .. "/actions/24/player_play.png")
     else
         widget:set_image(nil)
     end
