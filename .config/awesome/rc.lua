@@ -401,7 +401,10 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Shift" }, "d", function () awful.spawn("shutdown -h now", false) end),
 
     -- Open file explorer
-    awful.key({ modkey }, "e", function () awful.spawn("thunar", false) end)
+    awful.key({ modkey }, "e", function () awful.spawn("thunar", false) end),
+
+    -- Open chromium
+    awful.key({ modkey }, "c", function () awful.spawn("chromium", false) end)
 
 
 
