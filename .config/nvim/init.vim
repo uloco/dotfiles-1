@@ -36,6 +36,7 @@ Plug 'vim-scripts/Tabmerge'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 call plug#end()
 
@@ -122,6 +123,9 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {} " needed
 let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vue'] = 'v'
 let g:WebDevIconsNerdTreeAfterGlyphPadding = '  '
 let NERDTreeQuitOnOpen=1
+let g:NERDTreeExtensionHighlightColor = {}
+let g:NERDTreeExtensionHighlightColor['vue'] = '3AFFDB'
+
 
 " gitgutter
 let g:gitgutter_map_key = 0
