@@ -106,6 +106,7 @@ nnoremap :rn :TernRename<CR>
 nnoremap :gd :TernDef<CR>
 autocmd FileType riot call tern#Enable()
 autocmd FileType riot setlocal completeopt-=preview
+autocmd FileType vue call tern#Enable()
 
 " nerdtred
 let g:NERDTreeWinSize=40
@@ -153,10 +154,7 @@ tnoremap <Esc> <C-\><C-n>
 
 " Fuzzy finder
 let g:fuzzy_opencmd = 'edit'
-nnoremap <C-p> :FuzzyOpen<CR>
-
-" string search
-nnoremap <Leader>f :FuzzyGrep<CR>
+nnoremap <C-p> :FuzzyGrep<CR>
 
 " trailing whitespaces
 set list listchars=tab:>\ ,trail:-,eol:↵
