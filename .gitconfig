@@ -14,3 +14,5 @@
 	editor = nvim
 [user]
 	email = dimitridumonet@gmail.com
+[tag]
+  sort = v:refname
